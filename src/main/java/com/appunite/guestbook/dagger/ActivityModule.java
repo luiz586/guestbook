@@ -7,9 +7,20 @@ import android.view.LayoutInflater;
 
 import com.appunite.guestbook.MainActivity;
 import com.appunite.guestbook.SplashActivity;
+import com.appunite.guestbook.api.content.GsonObjectParser;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
+import com.google.api.client.http.HttpHeaders;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestFactory;
+import com.google.api.client.http.HttpRequestInitializer;
+import com.google.api.client.http.apache.ApacheHttpTransport;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
 
 import javax.inject.Singleton;
 

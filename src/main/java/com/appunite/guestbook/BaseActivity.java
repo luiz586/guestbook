@@ -6,6 +6,10 @@ import android.support.v7.app.ActionBarActivity;
 
 import com.appunite.guestbook.dagger.ActivityGraphProvider;
 import com.appunite.guestbook.dagger.ActivityModule;
+import com.appunite.guestbook.dagger.ForActivity;
+import com.appunite.guestbook.dagger.ForApplication;
+
+import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 

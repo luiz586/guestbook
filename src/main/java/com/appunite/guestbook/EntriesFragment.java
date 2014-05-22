@@ -32,7 +32,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appunite.guestbook.adapter.EntryAdapter;
+import com.appunite.guestbook.api.GuestbookApi;
+import com.appunite.guestbook.api.model.ResponseEntries;
 import com.appunite.guestbook.content.UserPreferences;
+import com.appunite.guestbook.dagger.ForActivity;
 import com.appunite.guestbook.dialogs.EntryDialog;
 import com.appunite.guestbook.helpers.data.ApiAsyncLoader;
 import com.appunite.guestbook.helpers.data.Result;
@@ -43,27 +46,29 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+import javax.inject.Provider;
 
 import butterknife.InjectView;
 import butterknife.OnClick;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<String>>
+public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<ResponseEntries>>
         implements AdapterView.OnItemClickListener {
 
-    private static class EntriesLoader extends ApiAsyncLoader<String> {
+     static class EntriesLoader extends ApiAsyncLoader<ResponseEntries> {
 
-        public EntriesLoader(Context context) {
+        @Inject
+        GuestbookApi mGuestBookApi;
+
+        @Inject
+        public EntriesLoader(@ForActivity Context context) {
             super(context);
         }
 
         @Override
-        protected String loadFromApi() throws Exception {
-            Thread.sleep(3000);
-            //   URL url = new URL("http://www.extremesstech.com/wp-content/uploads/2013/05/image-1.jpg");
-            // Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            return null;
+        protected ResponseEntries loadFromApi() throws Exception {
+            return mGuestBookApi.entries().list().execute();
         }
     }
 
@@ -90,6 +95,8 @@ public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<String>
     Picasso mPicasso;
     @Inject
     GoogleApiClient mGoogleApiClient;
+    @Inject
+    Provider<EntriesLoader> mEntriesLoaderProvider;
 
     private boolean mIsUserLogged;
 
@@ -100,7 +107,7 @@ public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<String>
 
     // TODO Change this with API.
     @Override
-    protected boolean isScreenEmpty(Result<String> result) {
+    protected boolean isScreenEmpty(Result<ResponseEntries> result) {
         return false;
     }
 
@@ -156,16 +163,16 @@ public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<String>
     }
 
     @Override
-    protected Loader<Result<String>> onCreateMainLoader(Bundle bundle) {
-        return new EntriesLoader(getActivity());
+    protected Loader<Result<ResponseEntries>> onCreateMainLoader(Bundle bundle) {
+        return mEntriesLoaderProvider.get();
     }
 
     @Override
-    protected void onLoadMainFinished(Result<String> result) {
+    protected void onLoadMainFinished(Result<ResponseEntries> result) {
         super.onLoadMainFinished(result);
 
         if (result.isSuccess()) {
-            mAdapter.swapData(new ArrayList<String>());
+            mAdapter.swapData(result.getResult().entries);
             updateUiComponents();
             if (mIsUserLogged) {
                 setUserInfo();
@@ -185,7 +192,7 @@ public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<String>
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        EntryDialog entryDialog = EntryDialog.newInstance(mAdapter.getItem(position));
+        EntryDialog entryDialog = EntryDialog.newInstance(mAdapter.getItem(position).message);
         entryDialog.show(getChildFragmentManager(), ENTRY_DIALOG);
     }
 

@@ -1,9 +1,15 @@
 package com.appunite.guestbook;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.res.Resources;
 
 import com.appunite.guestbook.dagger.ApplicationModule;
+import com.appunite.guestbook.dagger.ForActivity;
+import com.appunite.guestbook.dagger.ForApplication;
 import com.crashlytics.android.Crashlytics;
+
+import javax.inject.Inject;
 
 import dagger.ObjectGraph;
 

@@ -10,7 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appunite.guestbook.R;
+import com.appunite.guestbook.api.model.EntriesType;
 import com.appunite.guestbook.dagger.ForApplication;
+import com.google.api.client.util.Lists;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,44 +33,22 @@ public class EntryAdapter extends BaseAdapter {
 
 
     //TODO Change to use actual entry class
-    private ArrayList<String> mEntries;
+    private List<EntriesType> mEntries;
     private int mImageSize;
     private String mAuthorDateFormat;
 
-    private String firstContent = "FirstContent";
-    private String temp = "Lorem ipsum lorem impsum lorem ipsum lorem ipsum lorem " +
-            "ipsum Lorem ipsum lorem impsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem " +
-            "Lorem ipsum lorem impsum lorem ipsum lorem ipsum lorem " +
-            "ipsum Lorem ipsum lorem impsum lorem ipsum lorem ipsum lorem ipsumLorem ipsum lorem " +
-            "Lorem ipsum lorem impsum lorem ipsum lorem ipsum lorem ";
-
     @Inject
     public EntryAdapter(@ForApplication Context context){
-        mEntries = new ArrayList<String>();
         Resources rs = context.getResources();
         mImageSize = rs.getDimensionPixelSize(R.dimen.entry_photo_size);
         mAuthorDateFormat = rs.getString(R.string.entry_author_and_date);
     }
 
-    public void swapData(List<String> entries){
-//        if(mEntries != null){
-//            mEntries.addAll(entries);
-//        } else {
-//            mEntries = new ArrayList<String>(entries);
-//        }
-        for(int i=0; i<50; i++){
-            if(i==0){ mEntries.add(firstContent); } else {
-                mEntries.add(temp);}
-        }
-
+    public void swapData(List<EntriesType> entries) {
+        mEntries = entries;
         notifyDataSetChanged();
     }
 
-    public void addData(String entry){
-        mEntries.add(entry);
-
-        notifyDataSetChanged();
-    }
 
 
     @Override
@@ -81,7 +61,7 @@ public class EntryAdapter extends BaseAdapter {
     }
 
     @Override
-    public String getItem(int position) {
+    public EntriesType getItem(int position) {
         return mEntries.get(position);
     }
 
@@ -112,7 +92,7 @@ public class EntryAdapter extends BaseAdapter {
         }
 
 
-        viewHolder.mContent.setText(getItem(position));
+        viewHolder.mContent.setText(getItem(position).message);
         viewHolder.mAuthor.setText(String.format(mAuthorDateFormat, "AUTHOR", "05.03.2014"));
         mPicasso.load(R.drawable.ava)
                 .resize(mImageSize, mImageSize)
