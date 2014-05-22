@@ -82,6 +82,11 @@ public class MainActivity extends BaseActivity {
             Fragment fragment = NewEntryFragment.newInstance();
             ft.replace(R.id.main_content, fragment);
             ft.addToBackStack(null);
+        } else if (AppConsts.ACTION_SHOW_ENTRY_DETAIL.equals(action)) {
+            String entryTitle = intent.getStringExtra("title");
+            Fragment fragment = EntryDetailFragment.newInstance(entryTitle);
+            ft.replace(R.id.main_content, fragment);
+            ft.addToBackStack(null);
         } else {
             throw new RuntimeException("Unknown action: " + action);
         }

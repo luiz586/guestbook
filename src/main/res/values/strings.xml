@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Application -->
     <string name="app_name">GuestBook</string>
 
@@ -82,6 +83,6 @@
     <!-- Content Description Values -->
     <string name="profile_logout_button_desc">Logout button</string>
     <string name="profile_settings_button_desc">Settings button</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

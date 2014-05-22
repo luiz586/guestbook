@@ -72,7 +72,6 @@ public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<Respons
         }
     }
 
-    private static final String ENTRY_DIALOG = "entry_dialog";
     private static final String INFO_DIALOG = "info_dialog";
 
     @InjectView(R.id.profile_header)
@@ -192,8 +191,10 @@ public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<Respons
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        EntryDialog entryDialog = EntryDialog.newInstance(mAdapter.getItem(position).message);
-        entryDialog.show(getChildFragmentManager(), ENTRY_DIALOG);
+        String title = mAdapter.getItem(position).message;
+        Intent intent = new Intent(AppConsts.ACTION_SHOW_ENTRY_DETAIL);
+        intent.putExtra("title", title);
+        startActivity(intent);
     }
 
     @OnClick(R.id.entry_button)

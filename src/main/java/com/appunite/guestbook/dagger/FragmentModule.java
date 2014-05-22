@@ -4,6 +4,7 @@ import com.appunite.guestbook.BaseFragment;
 import com.appunite.guestbook.EditProfileFragment;
 import com.appunite.guestbook.EmailLoginFragment;
 import com.appunite.guestbook.EntriesFragment;
+import com.appunite.guestbook.EntryDetailFragment;
 import com.appunite.guestbook.LoginFragment;
 import com.appunite.guestbook.NewEntryFragment;
 import com.appunite.guestbook.SignupFragment;
@@ -17,7 +18,8 @@ import dagger.Module;
                 EmailLoginFragment.class,
                 SignupFragment.class,
                 EditProfileFragment.class,
-                NewEntryFragment.class
+                NewEntryFragment.class,
+                EntryDetailFragment.class
         },
         addsTo = ActivityModule.class,
         library = true
