@@ -49,8 +49,8 @@ public class FormValidator {
     }
 
     public boolean validateRetypedPassword() {
-        CharSequence password = mPassword.getText();
-        CharSequence retypedPassword = mRetypedPassword.getText();
+        final String password = String.valueOf(mPassword.getText());
+        final String retypedPassword = String.valueOf(mRetypedPassword.getText());
         if (!password.equals(retypedPassword)) {
             mRetypedPassword.setError(mContext.getResources().getString(R.string.form_validator_different_passwords));
             return false;
