@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
+import com.appunite.guestbook.content.UserPreferences;
 import com.appunite.guestbook.helpers.FormValidator;
 import com.appunite.guestbook.helpers.MailValidator;
 import com.appunite.guestbook.helpers.data.Result;
@@ -61,8 +62,18 @@ public class EmailLoginFragment extends BaseFragment {
             return;
         }
         // TODO Store User details from API to Pref
+        saveCredentialsAndBack();
+    }
+
+    private void saveCredentialsAndBack(){
+        final UserPreferences userPreferences = new UserPreferences(getActivity());
+        userPreferences.edit()
+                .setUserEmail(String.valueOf(mEmail.getText()))
+                .setLoggedIn(true)
+                .commit();
+
         Intent intent = new Intent(AppConsts.ACTION_SHOW_SETTINGS);
-        getActivity().startActivity(intent);
+        startActivity(intent);
     }
 
     @OnClick(R.id.signin_button)

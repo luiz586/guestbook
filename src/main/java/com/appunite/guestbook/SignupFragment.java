@@ -1,5 +1,6 @@
 package com.appunite.guestbook;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 
+import com.appunite.guestbook.content.UserPreferences;
 import com.appunite.guestbook.helpers.FormValidator;
 import com.appunite.guestbook.helpers.MailValidator;
 import com.appunite.guestbook.helpers.data.Result;
@@ -64,7 +66,21 @@ public class SignupFragment extends BaseFragment {
         if (!valid) {
             return;
         }
+
         // TODO Add data to API and Prefs. Go to ? LoginForm or Profile Settings
+        saveCredentialsAndBack();
+
+    }
+
+    private void saveCredentialsAndBack(){
+        final UserPreferences userPreferences = new UserPreferences(getActivity());
+        userPreferences.edit()
+            .setUserEmail(String.valueOf(mEmail.getText()))
+            .setLoggedIn(true)
+            .commit();
+
+        Intent intent = new Intent(AppConsts.ACTION_SHOW_SETTINGS);
+        startActivity(intent);
     }
 
     @OnClick(R.id.new_entry_dialog_add)

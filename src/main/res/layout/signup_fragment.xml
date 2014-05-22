@@ -65,6 +65,7 @@
                 android:inputType="textPassword"
                 android:background="@drawable/edittext_bg"/>
 
+
             <Button
                 android:id="@+id/new_entry_dialog_add"
                 android:layout_width="120dp"
