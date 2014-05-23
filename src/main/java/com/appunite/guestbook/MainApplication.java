@@ -8,6 +8,10 @@ import com.appunite.guestbook.dagger.ApplicationModule;
 import com.appunite.guestbook.dagger.ForActivity;
 import com.appunite.guestbook.dagger.ForApplication;
 import com.crashlytics.android.Crashlytics;
+import com.google.api.client.http.HttpTransport;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -25,6 +29,9 @@ public class MainApplication extends Application {
 
         if (BuildConfig.RELEASE) {
             Crashlytics.start(this);
+        }
+        if (BuildConfig.DEBUG) {
+            Logger.getLogger(HttpTransport.class.getName()).setLevel(Level.CONFIG);
         }
     }
 

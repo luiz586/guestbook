@@ -12,10 +12,8 @@ import android.widget.TextView;
 import com.appunite.guestbook.R;
 import com.appunite.guestbook.api.model.EntriesType;
 import com.appunite.guestbook.dagger.ForApplication;
-import com.google.api.client.util.Lists;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -92,7 +90,7 @@ public class EntryAdapter extends BaseAdapter {
         }
 
 
-        viewHolder.mContent.setText(getItem(position).message);
+        viewHolder.mContent.setText(getItem(position).title);
         viewHolder.mAuthor.setText(String.format(mAuthorDateFormat, "AUTHOR", "05.03.2014"));
         mPicasso.load(R.drawable.ava)
                 .resize(mImageSize, mImageSize)

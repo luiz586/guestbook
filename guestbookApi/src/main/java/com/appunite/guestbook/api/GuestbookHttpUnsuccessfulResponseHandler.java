@@ -40,7 +40,7 @@ public class GuestbookHttpUnsuccessfulResponseHandler implements HttpUnsuccessfu
     }
 
     private void throwError(HttpResponse httpResponse, JSONObject error) throws JSONException, ServerException {
-        String message = error.isNull("message") ? null : error.getString("message");
+        String message = error.isNull("title") ? null : error.getString("title");
         if(!error.isNull("code")) {
             int errorCode = error.getInt("code");
             if(errorCode == 602){

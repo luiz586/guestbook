@@ -9,6 +9,7 @@
     <string name="entries_not_logged_communicate">You are not logged in.</string>
     <string name="entries_not_logged_information">You are unable to add new entries before you log in.</string>
     <string name="entries_empty_communicate">There are no entries right now.</string>
+    <string name="entry_detail_empty_communicate">This entry has no detail message.</string>
 
     <!-- Entry Layout -->
     <string name="entry_author_and_date">%1$s - %2$s</string>

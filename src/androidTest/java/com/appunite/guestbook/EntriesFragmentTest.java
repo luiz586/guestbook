@@ -61,7 +61,7 @@ public class EntriesFragmentTest  extends ActivityInstrumentationTestCase2<MainA
 
     /**
      * Guest user is able to click on the ? button.
-     * We are unable to test whether the toast message appeared or not.
+     * We are unable to test whether the toast title appeared or not.
      * @throws Exception
      */
     public void testGuestInfoDetails()  throws Exception {

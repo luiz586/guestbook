@@ -2,6 +2,7 @@ package com.appunite.guestbook.api;
 
 import com.appunite.guestbook.api.content.GsonHttpContent;
 import com.appunite.guestbook.api.content.GsonObjectParser;
+import com.appunite.guestbook.api.model.EntryDetailResponse;
 import com.appunite.guestbook.api.model.ResponseEntries;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpContent;
@@ -25,29 +26,24 @@ import javax.inject.Provider;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 public class GuestbookApi {
+    public static final String REST_PATH_ENTRIES = "v1/entries/entries.json";
+    public static final String REST_PATH_DETAILS = "v1/entries/details.json";
 
     @Inject
     Provider<GsonHttpContent> mGsonHttpContentProvider;
 
-    final Gson mGson = new GsonBuilder()
+/*    final Gson mGson = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .create();
+            .create();*/
 
+    @Inject
+    Gson mGson;
+
+    @Inject
     HttpRequestFactory mRequestFactory;
 
     public GuestbookApi() {
-        mRequestFactory = getRequestFactory();
-    }
-
-    private HttpRequestFactory getRequestFactory(){
-        return new ApacheHttpTransport().createRequestFactory(new HttpRequestInitializer() {
-            @Override
-            public void initialize(HttpRequest request) throws IOException {
-                final HttpHeaders headers = request.getHeaders();
-                headers.setAccept("application/json");
-                request.setParser(new GsonObjectParser(mGson));
-            }
-        });
+       //mRequestFactory = getRequestFactory();
     }
 
     public abstract class GuestbookRequest<T> {
@@ -91,16 +87,29 @@ public class GuestbookApi {
 
     public EntriesApi entries() { return new EntriesApi(); }
 
-    public class EntriesApi {
-        public List list() { return new List(); }
-    }
+        public class EntriesApi {
+            public List list() {
+                return new List();
+            }
 
-    public class List extends GuestbookRequest<ResponseEntries>{
-        private static final String REST_PATH = "v1/entries/entries.json";
+            public Details get() {
+                return new Details();
+            }
 
-        private List(){
-            super(HttpMethods.GET, REST_PATH, null, ResponseEntries.class);
-        }
+            public class List extends GuestbookRequest<ResponseEntries> {
+
+                private List() {
+                    super(HttpMethods.GET, GuestbookApi.REST_PATH_ENTRIES, null, ResponseEntries.class);
+                }
+            }
+
+            public class Details extends GuestbookRequest<EntryDetailResponse> {
+
+                private Details() {
+                    super(HttpMethods.GET, GuestbookApi.REST_PATH_DETAILS, null, EntryDetailResponse.class);
+                }
+            }
+
     }
 
 }

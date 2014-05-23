@@ -15,7 +15,7 @@ implements LoaderManager.LoaderCallbacks<R>, ErrorHelper.OnForceReloadListener {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = onCreateChildView(inflater, container, savedInstanceState);
         setupErrorHelper(view);
         return view;

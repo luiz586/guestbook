@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,8 +17,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.Loader;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,21 +26,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.appunite.guestbook.adapter.EntryAdapter;
 import com.appunite.guestbook.api.GuestbookApi;
 import com.appunite.guestbook.api.model.ResponseEntries;
 import com.appunite.guestbook.content.UserPreferences;
 import com.appunite.guestbook.dagger.ForActivity;
-import com.appunite.guestbook.dialogs.EntryDialog;
 import com.appunite.guestbook.helpers.data.ApiAsyncLoader;
 import com.appunite.guestbook.helpers.data.Result;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -191,7 +184,7 @@ public class EntriesFragment extends ErrorHelperApiLoaderFragment<Result<Respons
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String title = mAdapter.getItem(position).message;
+        String title = mAdapter.getItem(position).title;
         Intent intent = new Intent(AppConsts.ACTION_SHOW_ENTRY_DETAIL);
         intent.putExtra("title", title);
         startActivity(intent);
